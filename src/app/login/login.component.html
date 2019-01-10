@@ -1,0 +1,39 @@
+<section class="main-section">
+<div class="container">
+    <div class="row">
+        <div class='col-md-3'></div>
+        <div class="col-md-6">
+            <div class="login-box well">
+                    <form [formGroup]="apiForm" (ngSubmit)="continue()">
+                        <div *ngIf='name.errors?.required && apiForm.invalid && name.touched'>
+                          <alert type="danger">
+                            <strong>!</strong> Name is required.
+                          </alert>
+                        </div>
+                        <div *ngIf='password.errors?.required && apiForm.invalid && password.touched'>
+                          <alert type="danger">
+                            <strong>!</strong> Password is required.
+                          </alert>
+                        </div>
+                        <div class="form-group">
+                            <label for="username"> Name</label>
+                            <input value='' id="username" placeholder="Name" type="text" name='name' class="form-control" formControlName="name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="api">Password </label>
+                            <input id="password" value='' placeholder="Password" type="password" class="form-control" formControlName="password"/>
+                        </div>
+                        <div class="form-group">
+                          <label> Dont have an Account ? </label><a class="nav-link-create" routerLink="/register">Create Account</a>
+                        </div>
+                         <div class="form-group">
+                            <button type="submit" [disabled]='!apiForm.valid' class="btn btn-primary btn-block m-t-md">Continue</button>
+                        </div>
+
+                    </form>
+            </div>
+        </div>
+        <div class='col-md-3'></div>
+    </div>
+</div>
+</section>

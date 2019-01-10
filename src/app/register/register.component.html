@@ -1,0 +1,52 @@
+<section class="main-section">
+  <div class="container">
+    <div class="row" *ngIf="updatMessage !== undefined">
+        <div class="col">
+          <alert type="success">
+            <strong>!</strong> {{ updatMessage }}
+          </alert>
+        </div>
+      </div>
+    <div class="row">
+      <div class='col-md-3'></div>
+      <div class="col-md-6">
+        <div class="login-box well">
+          <form [formGroup]="profileForm" (ngSubmit)="registerSubmit()">
+            <div class="form-group">
+              <label for="email"> Email :</label>
+              <input value='' [(ngModel)]="userObj.email" id="email" placeholder="Email" type="text" name='email' class="form-control"
+                formControlName="email" />
+            </div>
+            <div class="form-group">
+              <label for="username"> User Name :</label>
+              <input value='' [(ngModel)]="userObj.name" id="username" placeholder="Name" type="text" name='name' class="form-control"
+                formControlName="name" />
+            </div>
+            <div class="form-group">
+              <label for="password">Password :</label>
+              <input id="password" value='' [(ngModel)]="userObj.password" placeholder="Password" type="password" class="form-control" formControlName="password" />
+            </div>
+            <div class="form-group">
+              <label for="firstname">First Name :</label>
+              <input id="firstname" value=''[(ngModel)]="userObj.firstname" placeholder="First Name" type="text" class="form-control" formControlName="firstname" />
+            </div>
+            <div class="form-group">
+              <label for="lastname">Last Name :</label>
+              <input id="lastname" value=''[(ngModel)]="userObj.lastname" placeholder="Last Name" type="text" class="form-control" formControlName="lastname" />
+            </div>
+            <div class="form-group">
+              <label for="dob">Date of Birth : </label>
+              <input id="dob" value='' [(ngModel)]="userObj.dob" placeholder="Date of Birth" type="text" class="form-control" formControlName="dob" />
+            </div>
+            <div class="form-group">
+                <button type="submit" [disabled]='!profileForm.valid' class="btn btn-primary m-t-md">Confirm</button>
+                <button type="button" [disabled]='!profileForm.valid' class="btn btn-primary m-t-md">Cancel</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <div class='col-md-3'></div>
+    </div>
+  </div>
+</section>
