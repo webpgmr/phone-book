@@ -19,13 +19,8 @@ import { RegisterComponent } from './register/register.component';
 
 
 // ngx bootstrap modules
-import { AlertModule, ButtonsModule  } from 'ngx-bootstrap';
-
+import { AlertModule, ButtonsModule, BsDatepickerModule   } from 'ngx-bootstrap';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
-
-import { ChartsModule } from 'ng2-charts';
-
-
 
 @NgModule({
   declarations: [
@@ -47,6 +42,7 @@ import { ChartsModule } from 'ng2-charts';
     BrowserAnimationsModule,
     AlertModule.forRoot(),
     ButtonsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     Ng4LoadingSpinnerModule.forRoot(),
   ],
   providers: [

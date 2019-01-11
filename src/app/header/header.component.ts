@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   public isUserAvailable: boolean;
   public userName: string;
   public usrObj: any;
+  public headerTitle: string;
 
   constructor(
     private service: AppService,
@@ -20,6 +21,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // To do , based on the routing decide its registration or login for headerTitle;
+    this.headerTitle = 'Sign in';
     this.service.isUser.subscribe(isUser => this.isUserAvailable = isUser);
     this.service.userName.subscribe(userName => this.userName = userName);
     this.usrObj = JSON.parse(this.service.getFromBrowserStorage('userObj'));

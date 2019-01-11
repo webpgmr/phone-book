@@ -7,3 +7,49 @@
   display: inline-block;
   margin-left:5px;
 }
+.nav{
+  a{
+    cursor: pointer;
+  }
+}
+.nav-link{
+  img {
+    margin-right: 5px;
+  }
+}
+.box {
+  padding: 30px;
+  text-align: center;
+  width: 200px;
+  margin: 0 10px;
+  border-radius: 5px;
+  border: 3px dotted #dcdcdc;
+  color: #fff;
+  cursor: pointer;
+  a {
+    color: #fff;
+  }
+  img {
+    margin-right:5px;
+  }
+}
+
+.light-blue {
+  background-color: #3399ff;
+}
+.medium-blue{
+  background-color: #336699;
+}
+.dark-blue {
+  background-color: #003366;
+}
+.disabled {
+  opacity: 0.1;
+  cursor: default;
+}
+.light-grey {
+  background-color: #faf5f5;
+}
+.t-white{
+  color: #fff !important;
+}

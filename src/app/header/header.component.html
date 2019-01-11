@@ -1,12 +1,12 @@
 <header>
-  <nav class="navbar bg-light justify-content-center" *ngIf="!isUserAvailable">
+  <nav class="navbar medium-blue justify-content-center" *ngIf="!isUserAvailable">
     <div class="row ">
       <div class="col">
-          <legend>Sign In</legend>
+          <legend class="t-white">{{ headerTitle }}</legend>
       </div>
     </div>
   </nav>
-  <nav class="navbar navbar-expand-sm navbar-light bg-light" *ngIf="isUserAvailable" >
+  <nav class="navbar navbar-expand-sm navbar-light medium-blue" *ngIf="isUserAvailable" >
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -15,19 +15,19 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+          <a class="nav-link t-white" routerLink="/dashboard"><img src="../../assets/icons/dashboard.png">Dashboard</a>
         </li>
         <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" routerLink="/phone-book">Phone Book</a>
+          <a class="nav-link t-white" routerLink="/phone-book"><img src="../../assets/icons/address.png">PhoneBook</a>
         </li>
         <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" routerLink="/profile">Profile</a>
+          <a class="nav-link t-white" routerLink="/profile"><img src="../../assets/icons/profile.png">Profile</a>
         </li>
       </ul>
     </div>
     <div class="nav navbar-nav">
-      <span class="nav-item nav-link">Welcome {{ userName }}</span>
-      <a class="nav-item nav-link" (click)='logout()'>Logout</a>
+      <span class="nav-item nav-link t-white"><img src="../../assets/icons/user.png">Welcome {{ userName }}</span>
+      <a class="nav-item nav-link t-white" (click)='logout()'><img src="../../assets/icons/logout.png">Logout</a>
     </div>
   </nav>
 </header>

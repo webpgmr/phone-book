@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppConstants } from './app.constants';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -35,12 +35,37 @@ export class AppService  extends AppConstants {
     this.userName.next(userName);
   }
 
+  // getting information from server  rest api
   public getDetails(endpoint, succMsg?: string, errMsg?: string): Observable<any> {
     return this.http.get(endpoint).pipe(
       tap(res => this.handleServerResponse(res, succMsg)),
       retry(3),
       catchError(this.handleError(errMsg, []))
     );
+  }
+
+   // Send contents to the server by post method
+   public sendDetails(endpoint, postData, succMsg?: string, errMsg?: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+    return this.http.post(endpoint, JSON.stringify(postData), {
+      headers: headers
+    }).pipe(
+      tap(res => this.handleServerResponse(res, succMsg)),
+      retry(3),
+      catchError(this.handleError(errMsg, []))
+      );
+  }
+
+  // Update contents to the server by rest api
+  public updateDetails(endpoint, data, succMsg?: string, errMsg?: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+    return this.http.put(endpoint, JSON.stringify(data), {
+      headers: headers
+    }).pipe(
+      tap(_ => console.log(succMsg + `updated data=${data}`)),
+      retry(3),
+      catchError(this.handleError<any>(errMsg))
+      );
   }
 
   /**
@@ -66,7 +91,7 @@ export class AppService  extends AppConstants {
 
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.error.message}`);
-      this.displayError = error.error.message;
+      this.displayError = error.statusText;
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

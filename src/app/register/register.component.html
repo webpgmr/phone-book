@@ -1,8 +1,9 @@
 <section class="main-section">
   <div class="container">
+    <ng4-loading-spinner [loadingText]="'Please wait...'"></ng4-loading-spinner>
     <div class="row" *ngIf="updatMessage !== undefined">
         <div class="col">
-          <alert type="success">
+          <alert type="{{errorType}}">
             <strong>!</strong> {{ updatMessage }}
           </alert>
         </div>
@@ -11,7 +12,10 @@
       <div class='col-md-3'></div>
       <div class="col-md-6">
         <div class="login-box well">
-          <form [formGroup]="profileForm" (ngSubmit)="registerSubmit()">
+          <form [formGroup]="registerForm" (ngSubmit)="registerSubmit(registerForm.value)">
+            <div class="form-group">
+                <label> Already have Account ? </label><a class="nav-link-create" routerLink="/login">Sign In</a>
+            </div>
             <div class="form-group">
               <label for="email"> Email :</label>
               <input value='' [(ngModel)]="userObj.email" id="email" placeholder="Email" type="text" name='email' class="form-control"
@@ -20,11 +24,11 @@
             <div class="form-group">
               <label for="username"> User Name :</label>
               <input value='' [(ngModel)]="userObj.name" id="username" placeholder="Name" type="text" name='name' class="form-control"
-                formControlName="name" />
+                formControlName="name" autocomplete="off"/>
             </div>
             <div class="form-group">
               <label for="password">Password :</label>
-              <input id="password" value='' [(ngModel)]="userObj.password" placeholder="Password" type="password" class="form-control" formControlName="password" />
+              <input id="password" autocomplete="off" value='' [(ngModel)]="userObj.password" placeholder="Password" type="password" class="form-control" formControlName="password" />
             </div>
             <div class="form-group">
               <label for="firstname">First Name :</label>
@@ -36,11 +40,11 @@
             </div>
             <div class="form-group">
               <label for="dob">Date of Birth : </label>
-              <input id="dob" value='' [(ngModel)]="userObj.dob" placeholder="Date of Birth" type="text" class="form-control" formControlName="dob" />
+              <input id="dob" autocomplete="off" readonly value='' [(ngModel)]="userObj.dob" placeholder="YYYY-MM-DD" type="text" class="form-control" bsDatepicker formControlName="dob" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [maxDate]="maxDate"/>
             </div>
             <div class="form-group">
-                <button type="submit" [disabled]='!profileForm.valid' class="btn btn-primary m-t-md">Confirm</button>
-                <button type="button" [disabled]='!profileForm.valid' class="btn btn-primary m-t-md">Cancel</button>
+                <button type="submit" [disabled]='!registerForm.valid' class="btn btn-primary m-t-md">Confirm</button>
+                <button type="button" [disabled]='!registerForm.valid' class="btn btn-primary m-t-md">Cancel</button>
             </div>
 
           </form>

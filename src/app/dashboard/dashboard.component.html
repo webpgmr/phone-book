@@ -2,11 +2,14 @@
 <div class="container">
   <ng4-loading-spinner [loadingText]="'Please wait...'"></ng4-loading-spinner>
   <div class="row justify-content-center">
-    <div class="col6">
-        <div class="box">Address Book</div>
+    <div class="col4">
+        <div class="box light-blue"><a routerLink="/phone-book"><img src="../../assets/icons/address.png">Phone Book</a></div>
     </div>
-    <div class="col6">
-      <div class="box">Profile</div>
+    <div class="col4">
+      <div class="box medium-blue"><a routerLink="/profile"><img src="../../assets/icons/profile.png">Profile</a></div>
+    </div>
+    <div class="col4">
+      <div class="box dark-blue disabled">Change Password</div>
     </div>
   </div>
 </div>

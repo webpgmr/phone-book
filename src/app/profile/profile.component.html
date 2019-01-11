@@ -13,20 +13,6 @@
         <div class="login-box well">
           <form [formGroup]="profileForm" (ngSubmit)="profileSubmit()">
             <div class="form-group">
-              <label for="email"> Email :</label>
-              <input value='' [(ngModel)]="userObj.email" id="email" placeholder="Email" type="text" name='email' class="form-control"
-                formControlName="email" />
-            </div>
-            <div class="form-group">
-              <label for="username"> User Name :</label>
-              <input value='' [(ngModel)]="userObj.name" id="username" placeholder="Name" type="text" name='name' class="form-control"
-                formControlName="name" />
-            </div>
-            <div class="form-group">
-              <label for="password">Password :</label>
-              <input id="password" value='' [(ngModel)]="userObj.password" placeholder="Password" type="password" class="form-control" formControlName="password" />
-            </div>
-            <div class="form-group">
               <label for="firstname">First Name :</label>
               <input id="firstname" value=''[(ngModel)]="userObj.firstname" placeholder="First Name" type="text" class="form-control" formControlName="firstname" />
             </div>
@@ -37,6 +23,30 @@
             <div class="form-group">
               <label for="dob">Date of Birth : </label>
               <input id="dob" value='' [(ngModel)]="userObj.dob" placeholder="Date of Birth" type="text" class="form-control" formControlName="dob" />
+            </div>
+            <div class="form-group">
+              <label for="mobile">Mobile : </label>
+              <input id="mobile" value='' [(ngModel)]="userObj.mobile" placeholder="Mobile" type="text" class="form-control" formControlName="mobile" />
+            </div>
+            <div class="form-group">
+              <label for="landline">Landline : </label>
+              <input id="landline" value='' [(ngModel)]="userObj.landline" placeholder="Landline" type="text" class="form-control" formControlName="landline" />
+            </div>
+            <div class="form-group">
+              <label for="street">Street : </label>
+              <input id="street" value='' [(ngModel)]="userObj.street" placeholder="Street" type="text" class="form-control" formControlName="street" />
+            </div>
+            <div class="form-group">
+              <label for="state">State : </label>
+              <input id="state" value='' [(ngModel)]="userObj.state" placeholder="state" type="text" class="form-control" formControlName="state" />
+            </div>
+            <div class="form-group">
+              <label for="country">Country : </label>
+              <input id="country" value='' [(ngModel)]="userObj.country" placeholder="Country" type="text" class="form-control" formControlName="country" />
+            </div>
+            <div class="form-group">
+              <label for="pincode">Pin Code : </label>
+              <input id="pincode" value='' [(ngModel)]="userObj.pincode" placeholder="Pin Code" type="text" class="form-control" formControlName="pincode" />
             </div>
             <div class="form-group">
                 <button type="submit" [disabled]='!profileForm.valid' class="btn btn-primary m-t-md">Confirm</button>
