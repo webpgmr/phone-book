@@ -1,11 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // import app service
 import { AppService } from './app.service';
+import { BasicAuthInterceptor } from './helper/basic-auth-interceptor';
+import { AuthGuard } from './guard/auth.guard';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +40,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -46,7 +50,9 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     Ng4LoadingSpinnerModule.forRoot(),
   ],
   providers: [
-    AppService
+    AppService,
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

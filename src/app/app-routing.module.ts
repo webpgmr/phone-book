@@ -7,29 +7,33 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PhoneBookComponent} from './phone-book/phone-book.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './guard/auth.guard';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
   {
     path: 'login',
     component: LoginComponent
   },
   {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'phone-book',
-    component: PhoneBookComponent
-  },
-  {
-    path: 'register',
-    component: RegisterComponent
+    component: PhoneBookComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

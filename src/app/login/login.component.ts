@@ -1,34 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AppService } from './../app.service';
+import { AuthenticationService} from './../auth.service';
+import { AppConstants } from './../app.constants';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 
 @Component({
   selector: 'app-login',
+  providers: [AuthenticationService],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends AppConstants implements OnInit {
 
   apiForm: FormGroup;
   name: FormControl;
   password: FormControl;
-
-  public userObj: any;
+  errorType: string;
+  updatMessage: string;
 
   constructor(
     private service: AppService,
+    private auth: AuthenticationService,
+    public spinner: Ng4LoadingSpinnerService,
     private router: Router) {
-    this.userObj = {'name': '' , 'api': '', 'city': '', 'country': '', 'expiry': 0};
+      super();
   }
 
   ngOnInit() {
-    // sessionStorage.removeItem('userObj');
+    this.updatMessage = undefined;
     // logged in User
-    if ( this.service.getFromBrowserStorage('userObj') !== null ) {
+    if ( this.service.getFromBrowserStorage('token') !== null ) {
       this.router.navigate(['/dashboard']);
-      this.service.changeIsUser(true);
+      // this.service.changeIsUser(true);
     }
     this.name = new FormControl('', Validators.required);
     this.password = new FormControl('', Validators.required);
@@ -45,13 +51,23 @@ export class LoginComponent implements OnInit {
   continue() {
     if (this.apiForm.valid) {
       console.log('Form Submitted!');
-      this.userObj.name = this.name.value;
-      this.userObj.password = this.password.value;
-      this.service.setToBrowserStorage('userObj', JSON.stringify(this.userObj));
-      this.service.changeIsUser(true);
-      this.service.changeUserName(this.name.value);
-      this.router.navigate(['/dashboard']);
-      this.apiForm.reset();
+      this.spinner.show();
+      this.auth.login(this.name.value, this.password.value).subscribe(res => {
+        // console.log(res);
+        if (res.token && res.status_code === '200') {
+          this.service.changeIsUser(true);
+          this.apiForm.reset();
+          this.spinner.hide();
+          this.router.navigate(['/dashboard']);
+        }
+      }, (error) => {
+        console.log(error);
+        this.service.changeIsUser(true);
+        this.spinner.hide();
+        this.apiForm.reset();
+        this.errorType = 'danger';
+        this.updatMessage = 'Login Failed';
+      });
     }
   }
 

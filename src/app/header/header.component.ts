@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from './../app.service';
-import { Router } from '@angular/router';
+import { AuthenticationService } from './../auth.service';
+import { Router, NavigationEnd } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
+  providers: [AuthenticationService],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -11,33 +14,35 @@ export class HeaderComponent implements OnInit {
 
   public isUserAvailable: boolean;
   public userName: string;
-  public usrObj: any;
+  public user_id: string;
   public headerTitle: string;
 
   constructor(
-    private service: AppService,
+    public service: AppService,
+    public auth: AuthenticationService,
     private router: Router ) {
     this.isUserAvailable = false;
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && ( event.urlAfterRedirects === '/register') ) {
+        this.headerTitle = 'Register';
+      } else {
+        this.headerTitle = 'Sign in';
+      }
+    });
   }
 
   ngOnInit() {
-
-    // To do , based on the routing decide its registration or login for headerTitle;
-    this.headerTitle = 'Sign in';
-    this.service.isUser.subscribe(isUser => this.isUserAvailable = isUser);
-    this.service.userName.subscribe(userName => this.userName = userName);
-    this.usrObj = JSON.parse(this.service.getFromBrowserStorage('userObj'));
-    if ( this.usrObj !== null ) {
+    this.service.currentIsUser.subscribe(isUserAvailable => this.isUserAvailable = isUserAvailable);
+    this.user_id = JSON.parse(this.service.getFromBrowserStorage('user_id'));
+    if ( this.user_id !== null ) {
       this.isUserAvailable = true;
     }
   }
 
   logout() {
-    sessionStorage.removeItem('userObj');
+    this.auth.logout();
     this.service.changeIsUser(false);
-    this.service.changeUserName('');
-    this.isUserAvailable = false;
-    sessionStorage.clear()
     this.router.navigate(['/login']);
+    // location.reload();
   }
 }

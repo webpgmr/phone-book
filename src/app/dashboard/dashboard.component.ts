@@ -27,10 +27,6 @@ export class DashboardComponent extends AppConstants implements OnInit, OnDestro
   ngOnInit() {
     this.service.displayError = undefined;
     this.spinner.show();
-    if (this.service.authenticateUser() ) {
-      // do nothing now
-      this.spinner.hide();
-    }
   }
 
 

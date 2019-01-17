@@ -16,6 +16,7 @@ export class AppService  extends AppConstants {
   public displayError: string;
   public serverCount: number;
   currentIsUser = this.isUser.asObservable();
+  currentUserName = this.userName.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -51,7 +52,6 @@ export class AppService  extends AppConstants {
       headers: headers
     }).pipe(
       tap(res => this.handleServerResponse(res, succMsg)),
-      retry(3),
       catchError(this.handleError(errMsg, []))
       );
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppConstants } from './../app.constants';
 import { AppService } from './../app.service';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { User } from '../models/User';
@@ -23,12 +24,16 @@ export class RegisterComponent extends AppConstants implements OnInit {
   public userObj: User;
   public updatMessage: string;
   public errorType: String;
-  constructor(public service: AppService, public spinner: Ng4LoadingSpinnerService) {
+  constructor(public service: AppService, public router: Router, public spinner: Ng4LoadingSpinnerService) {
     super();
     this.userObj = new User();
   }
 
   ngOnInit() {
+    // logged in User
+    if ( this.service.getFromBrowserStorage('token') !== null ) {
+      this.router.navigate(['/dashboard']);
+    }
     this.createForm();
     this.updatMessage = undefined;
     this.errorType = '';

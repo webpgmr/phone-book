@@ -1,18 +1,17 @@
 export class User {
 
+  public id: number;
   public email: string;
   public name: string;
   public password: string;
-  public firstname: string;
-  public lastname: string;
-  public dob: Date;
+  public token: string;
 
   public constructor( ) {
+    this.id = 0;
     this.email = '';
     this.name = '';
     this.password = '';
-    this.lastname = '';
-    this.dob = new Date();
+    this.token = '';
   }
 
 }
