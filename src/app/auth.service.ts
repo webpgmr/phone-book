@@ -31,5 +31,6 @@ export class AuthenticationService extends AppConstants {
         // remove user from session storage to log user out
         sessionStorage.removeItem('user_id');
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('userObj');
     }
 }

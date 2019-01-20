@@ -1,17 +1,18 @@
 <section class="main-section">
   <div class="container">
+    <ng4-loading-spinner [loadingText]="'Please wait...'"></ng4-loading-spinner>
     <div class="row" *ngIf="updatMessage !== undefined">
         <div class="col">
-          <alert type="success">
+          <alert type={{errorType}} *ngIf="updatMessage">
             <strong>!</strong> {{ updatMessage }}
           </alert>
         </div>
       </div>
+    <form [formGroup]="profileForm" (ngSubmit)="profileSubmit(profileForm.value)">
     <div class="row">
-      <div class='col-md-3'></div>
       <div class="col-md-6">
-        <div class="login-box well">
-          <form [formGroup]="profileForm" (ngSubmit)="profileSubmit()">
+        <fieldset>
+            <legend> Personal Details </legend>         
             <div class="form-group">
               <label for="firstname">First Name :</label>
               <input id="firstname" value=''[(ngModel)]="userObj.firstname" placeholder="First Name" type="text" class="form-control" formControlName="firstname" />
@@ -22,8 +23,15 @@
             </div>
             <div class="form-group">
               <label for="dob">Date of Birth : </label>
-              <input id="dob" value='' [(ngModel)]="userObj.dob" placeholder="Date of Birth" type="text" class="form-control" formControlName="dob" />
+              <input id="dob" value='' [(ngModel)]="userObj.dob" placeholder="Date of Birth" type="text" class="form-control" formControlName="dob" readonly bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
             </div>
+            <div class="form-group">
+                <label for="sex">Gender : </label>
+                <select class="form-control" [(ngModel)]="userObj.sex" formControlName="sex">
+                    <option value="Male">Male</option>  
+                    <option value="Female">Female</option>
+                </select>
+              </div>
             <div class="form-group">
               <label for="mobile">Mobile : </label>
               <input id="mobile" value='' [(ngModel)]="userObj.mobile" placeholder="Mobile" type="text" class="form-control" formControlName="mobile" />
@@ -32,7 +40,12 @@
               <label for="landline">Landline : </label>
               <input id="landline" value='' [(ngModel)]="userObj.landline" placeholder="Landline" type="text" class="form-control" formControlName="landline" />
             </div>
-            <div class="form-group">
+          </fieldset>
+      </div>
+      <div class='col-md-6'>
+        <fieldset>
+          <legend> Communication Details </legend>
+          <div class="form-group">
               <label for="street">Street : </label>
               <input id="street" value='' [(ngModel)]="userObj.street" placeholder="Street" type="text" class="form-control" formControlName="street" />
             </div>
@@ -42,21 +55,27 @@
             </div>
             <div class="form-group">
               <label for="country">Country : </label>
-              <input id="country" value='' [(ngModel)]="userObj.country" placeholder="Country" type="text" class="form-control" formControlName="country" />
+              <select class="form-control" [(ngModel)]="userObj.country" formControlName="country">
+                  <option *ngFor="let country of countryList" [value]="country">{{country}}</option> 
+              </select>
             </div>
             <div class="form-group">
               <label for="pincode">Pin Code : </label>
               <input id="pincode" value='' [(ngModel)]="userObj.pincode" placeholder="Pin Code" type="text" class="form-control" formControlName="pincode" />
             </div>
+          </fieldset>
+      </div>
+    </div>
+    <div class="row t-c mt-30p">
+        <div class='col-md-3'></div>
+        <div class='col-md-6'>
             <div class="form-group">
                 <button type="submit" [disabled]='!profileForm.valid' class="btn btn-primary m-t-md">Confirm</button>
                 <button type="button" [disabled]='!profileForm.valid' class="btn btn-primary m-t-md">Cancel</button>
             </div>
-
-          </form>
         </div>
-      </div>
-      <div class='col-md-3'></div>
+        <div class='col-md-3'></div>
     </div>
+  </form>
   </div>
 </section>

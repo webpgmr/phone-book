@@ -53,3 +53,24 @@
 .t-white{
   color: #fff !important;
 }
+
+fieldset{
+  padding:20px;
+  border: 1px solid #dcdcdc;
+}
+legend {
+  white-space: nowrap
+}
+.mt-30p{
+  margin-top:30px;
+}
+.mt-10p{
+  margin-top:10px;
+}
+.t-c{
+  text-align: center;
+}
+
+.datatable-header-cell-label{
+  font-weight: bold;
+}

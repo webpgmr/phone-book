@@ -1,3 +1,4 @@
+import { User } from './models/User';
 import { Injectable } from '@angular/core';
 import { AppConstants } from './app.constants';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -12,7 +13,6 @@ export class AppService  extends AppConstants {
 
   public isUser = new BehaviorSubject(false);
   public userName = new BehaviorSubject('');
-  public userObj: any;
   public displayError: string;
   public serverCount: number;
   currentIsUser = this.isUser.asObservable();
@@ -25,7 +25,6 @@ export class AppService  extends AppConstants {
     super();
     this.displayError = undefined;
     this.serverCount = 0;
-
   }
 
   changeIsUser(isUser: boolean) {
@@ -74,10 +73,10 @@ export class AppService  extends AppConstants {
    * @param response
    */
   public handleServerResponse(result, message) {
-    if (result.cod === '200') {
-      this.serverCount = this.serverCount + 1;
-      console.log(message + 'Count:' + this.serverCount);
+    if (result.status_code !== '200') {
+      console.log(result.message + " " + result.status_code);
     }
+    return result;
   }
 
   /**
@@ -103,8 +102,6 @@ export class AppService  extends AppConstants {
       return false;
     } else {
       this.changeIsUser(true);
-      this.userObj = JSON.parse(this.getFromBrowserStorage('userObj'));
-      this.changeIsUser(this.userObj.name);
       return true;
     }
   }

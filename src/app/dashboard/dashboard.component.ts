@@ -25,10 +25,19 @@ export class DashboardComponent extends AppConstants implements OnInit, OnDestro
   }
 
   ngOnInit() {
-    this.service.displayError = undefined;
     this.spinner.show();
+    const user_id = this.service.getFromBrowserStorage('user_id');
+    const token = this.service.getFromBrowserStorage('token');
+    const postData = {'user_id': user_id, 'token': token};
+    this.service.sendDetails(this.apiGetProfile, postData).subscribe(res => {
+      if (res.result && res.status_code === '200') {
+        this.service.changeUserName(res.result.firstname + ' ' + res.result.lastname);
+        this.service.changeIsUser(true);
+        this.service.setToBrowserStorage('userObj', JSON.stringify(res.result));
+        this.spinner.hide();
+      }
+    });
   }
-
 
   ngOnDestroy() {
   }

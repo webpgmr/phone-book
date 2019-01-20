@@ -20,9 +20,20 @@ import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
+import { DatePipe } from '@angular/common';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+
 
 // ngx bootstrap modules
-import { AlertModule, ButtonsModule, BsDatepickerModule   } from 'ngx-bootstrap';
+import {
+  AlertModule,
+  ButtonsModule,
+  BsDatepickerModule,
+  CollapseModule
+  } from 'ngx-bootstrap';
+
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 @NgModule({
@@ -44,14 +55,17 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxDatatableModule,
     AlertModule.forRoot(),
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    CollapseModule.forRoot(),
     Ng4LoadingSpinnerModule.forRoot(),
   ],
   providers: [
     AppService,
     AuthGuard,
+    DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

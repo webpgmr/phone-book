@@ -3,54 +3,84 @@
     <ng4-loading-spinner [loadingText]="'Please wait...'"></ng4-loading-spinner>
     <div class="row" *ngIf="updatMessage !== undefined">
         <div class="col">
-          <alert type="{{errorType}}">
+          <alert type="{{errorType}}" *ngIf="updatMessage">
             <strong>!</strong> {{ updatMessage }}
           </alert>
         </div>
-      </div>
-    <div class="row">
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="registerSubmit(registerForm.value)">
+    <div class="row t-c">
       <div class='col-md-3'></div>
-      <div class="col-md-6">
-        <div class="login-box well">
-          <form [formGroup]="registerForm" (ngSubmit)="registerSubmit(registerForm.value)">
-            <div class="form-group">
-                <label> Already have Account ? </label><a class="nav-link-create" routerLink="/login">Sign In</a>
-            </div>
-            <div class="form-group">
-              <label for="email"> Email :</label>
-              <input value='' [(ngModel)]="userObj.email" id="email" placeholder="Email" type="text" name='email' class="form-control"
-                formControlName="email" />
-            </div>
-            <div class="form-group">
-              <label for="username"> User Name :</label>
-              <input value='' [(ngModel)]="userObj.name" id="username" placeholder="Name" type="text" name='name' class="form-control"
-                formControlName="name" autocomplete="off"/>
-            </div>
-            <div class="form-group">
-              <label for="password">Password :</label>
-              <input id="password" autocomplete="off" value='' [(ngModel)]="userObj.password" placeholder="Password" type="password" class="form-control" formControlName="password" />
-            </div>
-            <div class="form-group">
-              <label for="firstname">First Name :</label>
-              <input id="firstname" value=''[(ngModel)]="userObj.firstname" placeholder="First Name" type="text" class="form-control" formControlName="firstname" />
-            </div>
-            <div class="form-group">
-              <label for="lastname">Last Name :</label>
-              <input id="lastname" value=''[(ngModel)]="userObj.lastname" placeholder="Last Name" type="text" class="form-control" formControlName="lastname" />
-            </div>
-            <div class="form-group">
-              <label for="dob">Date of Birth : </label>
-              <input id="dob" autocomplete="off" readonly value='' [(ngModel)]="userObj.dob" placeholder="YYYY-MM-DD" type="text" class="form-control" bsDatepicker formControlName="dob" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [maxDate]="maxDate"/>
-            </div>
-            <div class="form-group">
-                <button type="submit" [disabled]='!registerForm.valid' class="btn btn-primary m-t-md">Confirm</button>
-                <button type="button" [disabled]='!registerForm.valid' class="btn btn-primary m-t-md">Cancel</button>
-            </div>
-
-          </form>
-        </div>
+      <div class="col-md-6">    
+          <div class="form-group">
+              <label> Already have Account ? </label><a class="nav-link-create" routerLink="/login">Sign In</a>
+          </div>
       </div>
       <div class='col-md-3'></div>
     </div>
+    <div class="row">
+      <div class="col">
+        <div *ngIf='email.errors?.required && registerForm.invalid && email.touched'>
+            <alert type="danger">
+              <strong>!</strong> Valid email address required.
+            </alert>
+          </div>
+          <div *ngIf='password.errors?.required && registerForm.invalid && password.touched'>
+              <alert type="danger">
+                <strong>!</strong> Password should not be empty
+              </alert>
+            </div>
+      </div>
+        
+    </div>
+    <div class="row">        
+        <div class="col-md-6">
+            <fieldset>
+            <legend>Login Details</legend>
+            <div class="form-group">
+                <label for="email"> Email :</label>
+                <input value='' id="email" placeholder="Email" type="text" name='email' class="form-control"
+                  formControlName="email" />
+              </div>
+              <div class="form-group">
+                <label for="username"> User Name :</label>
+                <input value='' id="username" placeholder="Name" type="text" name='name' class="form-control"
+                  formControlName="name" autocomplete="off"/>
+              </div>
+              <div class="form-group">
+                <label for="password">Password :</label>
+                <input id="password" autocomplete="off" value='' minlength="8"  mxnlength="20" placeholder="Password" type="password" class="form-control" formControlName="password" />
+              </div>
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <fieldset>
+              <legend>Personal Details</legend>
+              <div class="form-group">
+                <label for="firstname">First Name :</label>
+                <input id="firstname" value='' placeholder="First Name" type="text" class="form-control" formControlName="firstname" />
+              </div>
+              <div class="form-group">
+                <label for="lastname">Last Name :</label>
+                <input id="lastname" value='' placeholder="Last Name" type="text" class="form-control" formControlName="lastname" />
+              </div>
+              <div class="form-group">
+                <label for="dob">Date of Birth : </label>
+                <input id="dob" autocomplete="off" readonly value='' placeholder="YYYY-MM-DD" type="text" class="form-control" bsDatepicker formControlName="dob" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [maxDate]="maxDate"/>
+              </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row mt-30p t-c">
+        <div class='col-md-3'></div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <button type="submit" [disabled]='!registerForm.valid' class="btn btn-primary m-t-md">Confirm</button>
+                <button type="button" [disabled]='!registerForm.valid' class="btn btn-primary m-t-md">Cancel</button>
+            </div> 
+        </div>
+        <div class='col-md-3'></div>
+    </div>
+  </form>
   </div>
 </section>

@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   public isUserAvailable: boolean;
   public userName: string;
   public user_id: string;
+  public userObj: any;
   public headerTitle: string;
 
   constructor(
@@ -33,9 +34,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.service.currentIsUser.subscribe(isUserAvailable => this.isUserAvailable = isUserAvailable);
+    this.service.currentUserName.subscribe(userName => this.userName = userName);
     this.user_id = JSON.parse(this.service.getFromBrowserStorage('user_id'));
     if ( this.user_id !== null ) {
       this.isUserAvailable = true;
+      this.userObj = JSON.parse(this.service.getFromBrowserStorage('userObj'));
+      this.userName = this.userObj.firstname + ' ' + this.userObj.lastname;
     }
   }
 

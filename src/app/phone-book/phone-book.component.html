@@ -1,22 +1,237 @@
 <section class="main-section">
   <div class="container">
+    <ng4-loading-spinner [loadingText]="'Please wait...'"></ng4-loading-spinner>
     <div class="row" *ngIf="updatMessage !== undefined">
         <div class="col">
-          <alert type="success">
+          <alert type={{errorType}}>
             <strong>!</strong> {{ updatMessage }}
           </alert>
         </div>
-      </div>
+    </div>
+    <!-- Create contact template -->
     <div class="row">
-      <div class='col-md-4 light-grey'>
-        <label>Contacts</label>
-      </div>
-      <div class="col-md-8">
-        <div class="login-box well">
-          <!-- angular table for phone book information-->
-          Comming Soon
-        </div>
+      <div class="col">
+          <div class="t-ar" (click)="toggleCollapse()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseEvent">
+              <img src="../assets/icons/add.png" alt="create contact"> Create Contact
+          </div>
+          <div id="collapseEvent" class="card card-block card-header mt-30p" (collapsed)="collapsed()" (expanded)="expanded()" [collapse]="isCollapsed">
+            <div>
+                <form [formGroup]="contactForm" (ngSubmit)="contactSubmit(contactForm.value)">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <fieldset>
+                            <legend> Personal Details </legend>
+                            <div class="form-group">
+                              <label for="firstname">First Name :</label>
+                              <input id="firstname" value=''[(ngModel)]="contactObj.firstname" placeholder="First Name" type="text" class="form-control" formControlName="firstname" />
+                            </div>
+                            <div class="form-group">
+                              <label for="lastname">Last Name :</label>
+                              <input id="lastname" value=''[(ngModel)]="contactObj.lastname" placeholder="Last Name" type="text" class="form-control" formControlName="lastname" />
+                            </div>
+                            <div class="form-group">
+                              <label for="dob">Date of Birth : </label>
+                              <input id="dob" value='' [(ngModel)]="contactObj.dob" placeholder="Date of Birth" type="text" class="form-control" formControlName="dob" readonly bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="sex">Gender : </label>
+                                <select class="form-control" [(ngModel)]="contactObj.sex" formControlName="sex">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="email">Email : </label>
+                                  <input id="email" value='' [(ngModel)]="contactObj.email" placeholder="Email" type="text" class="form-control" formControlName="email" />
+                                </div>
+                          </fieldset>
+                      </div>
+                      <div class='col-md-6'>
+                        <fieldset>
+                          <legend> Communication Details </legend>
+                          <div class="form-group">
+                              <label for="mobile">Mobile : </label>
+                              <input id="mobile" value='' [(ngModel)]="contactObj.mobile" placeholder="Mobile" type="text" class="form-control" formControlName="mobile" />
+                            </div>
+                            <div class="form-group">
+                              <label for="landline">Landline : </label>
+                              <input id="landline" value='' [(ngModel)]="contactObj.landline" placeholder="Landline" type="text" class="form-control" formControlName="landline" />
+                            </div>
+                              <div class="form-group">
+                              <label for="street">Street : </label>
+                              <input id="street" value='' [(ngModel)]="contactObj.street" placeholder="Street" type="text" class="form-control" formControlName="street" />
+                            </div>
+                            <div class="form-group">
+                              <label for="state">State : </label>
+                              <input id="state" value='' [(ngModel)]="contactObj.state" placeholder="state" type="text" class="form-control" formControlName="state" />
+                            </div>
+                            <div class="form-group">
+                              <label for="country">Country : </label>
+                              <select class="form-control" [(ngModel)]="contactObj.country" formControlName="country">
+                                  <option *ngFor="let country of countryList" [value]="country">{{country}}</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="pincode">Pin Code : </label>
+                              <input id="pincode" value='' [(ngModel)]="contactObj.pincode" placeholder="Pin Code" type="text" class="form-control" formControlName="pincode" />
+                            </div>
+                          </fieldset>
+                      </div>
+                    </div>
+                    <div class="row t-c mt-30p">
+                        <div class='col-md-3'></div>
+                        <div class='col-md-6'>
+                            <div class="form-group">
+                                <button type="submit" [disabled]='!contactForm.valid' class="btn btn-primary m-t-md">Confirm</button>
+                                <button type="button" [disabled]='!contactForm.valid' class="btn btn-primary m-t-md">Cancel</button>
+                            </div>
+                        </div>
+                        <div class='col-md-3'></div>
+                    </div>
+                  </form>
+            </div>
+          </div>
       </div>
     </div>
+     <!-- Create contact template -->
+    <!-- Material Table display -->
+    <div class="row mt-30p">
+      <legend>Contacts ({{totaCount}})</legend>
+      <div class="col">
+          <img src="../../assets/icons/search.png" alt="search">
+          <input type='text' style='padding:8px;margin:15px auto;width:30%;' placeholder='Type to filter the firstname' (keyup)='updateFilter($event)'/>
+          <ngx-datatable
+          #contactTable
+          *ngIf="contacts != undefined"
+          [columnMode]="'standard'"
+          [rows]="displayData"
+          [count]="totaCount"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [limit]="10">
+          <!-- Row Detail Template -->
+          <ngx-datatable-row-detail [rowHeight]="auto" #myDetailRow (toggle)="onDetailToggle($event)">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+              <div class="details-row" *ngIf="!editView">
+                  <div><strong>Gender: </strong>{{row.sex}} </div>
+                  <div><strong>DOB: </strong>{{row.dob}} </div>
+                  <div><strong>Mobile: </strong>{{row.mobile}}, <strong>LandLine: </strong>{{row.landline}} </div>
+                  <div><strong>Address: </strong>{{row.street}}, {{row.state}} - {{row.pincode}}, {{row.country}} </div>
+              </div>
+              <div class="details-row" *ngIf="editView">
+                  <form [formGroup]="contactForm" (ngSubmit)="editContactSubmit(contactForm.value, row.id)">
+                  <div class="edit_contact_block">
+                  <fieldset>
+                      <legend> Personal Details </legend>
+                      <div class="form-group">
+                          <label for="firstname">First Name :</label>
+                          <input id="firstname" value=''[(ngModel)]="row.firstname" placeholder="First Name" type="text" class="form-control" formControlName="firstname" />
+                        </div>
+                        <div class="form-group">
+                          <label for="lastname">Last Name :</label>
+                          <input id="lastname" value=''[(ngModel)]="row.lastname" placeholder="Last Name" type="text" class="form-control" formControlName="lastname" />
+                        </div>
+                        <div class="form-group">
+                          <label for="dob">Date of Birth : </label>
+                          <input id="dob" value='' [(ngModel)]="row.dob" placeholder="Date of Birth" type="text" class="form-control" formControlName="dob" readonly bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sex">Gender : </label>
+                            <select class="form-control" [(ngModel)]="row.sex" formControlName="sex">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                              <label for="email">Email : </label>
+                              <input id="email" value='' [(ngModel)]="row.email" placeholder="Email" type="text" class="form-control" formControlName="email" />
+                            </div>
+                    </fieldset>
+                  </div>
+                  <div class="edit_contact_block">
+                    <fieldset>
+                        <legend> Communication Details </legend>
+                        <div class="form-group">
+                            <label for="mobile">Mobile : </label>
+                            <input id="mobile" value='' [(ngModel)]="row.mobile" placeholder="Mobile" type="text" class="form-control" formControlName="mobile" />
+                          </div>
+                          <div class="form-group">
+                            <label for="landline">Landline : </label>
+                            <input id="landline" value='' [(ngModel)]="row.landline" placeholder="Landline" type="text" class="form-control" formControlName="landline" />
+                          </div>
+                            <div class="form-group">
+                            <label for="street">Street : </label>
+                            <input id="street" value='' [(ngModel)]="row.street" placeholder="Street" type="text" class="form-control" formControlName="street" />
+                          </div>
+                          <div class="form-group">
+                            <label for="state">State : </label>
+                            <input id="state" value='' [(ngModel)]="row.state" placeholder="state" type="text" class="form-control" formControlName="state" />
+                          </div>
+                          <div class="form-group">
+                            <label for="country">Country : </label>
+                            <select class="form-control" [(ngModel)]="row.country" formControlName="country">
+                                <option *ngFor="let country of countryList" [value]="country">{{country}}</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="pincode">Pin Code : </label>
+                            <input id="pincode" value='' [(ngModel)]="row.pincode" placeholder="Pin Code" type="text" class="form-control" formControlName="pincode" />
+                          </div>
+                        </fieldset>
+                      </div>
+                    <div class="edit_contact_buttons">
+                        <div class="form-group">
+                            <button type="submit" [disabled]='!contactForm.valid' class="btn btn-primary m-t-md">Confirm</button>
+                            <button type="button" [disabled]='!contactForm.valid' class="btn btn-primary m-t-md">Cancel</button>
+                        </div>
+                    </div>
+                  </form>
+              </div>
+            </ng-template>
+          </ngx-datatable-row-detail>
+          <!-- Column Templates -->
+           <ngx-datatable-column
+            [width]="50"
+            [resizeable]="false"
+            [sortable]="false"
+            [draggable]="false"
+            [canAutoResize]="false">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+              <a
+                href="javascript:void(0)"
+                [class.datatable-icon-right]="!expanded"
+                [class.datatable-icon-down]="expanded"
+                title="Expand/Collapse Row"
+                (click)="toggleExpandRow(row)">
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Firstname" width="200">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Lastname" width="200">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Email" width="300">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column>
+          <ngx-datatable-column width="200" name="Action">
+              <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                <img (click)="toggleExpandEditRow(row)" class="icon_action" src="../../assets/icons/edit.png" alt="edit contact">
+                <img (click)="deleteConfirm(row.id)" class="icon_action" src="../../assets/icons/delete.png" alt="delete contact">
+              </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+          <div *ngIf="contacts == undefined"> No Data Available !!!</div>
+      </div>
+    </div>
+    <!-- Material Table display -->
   </div>
 </section>

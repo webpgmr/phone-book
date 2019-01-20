@@ -1,0 +1,65 @@
+.t-ar{
+    text-align: right;
+    cursor: pointer;
+}
+
+#contacts{
+  .panel {
+    margin-bottom: 10px;
+  }
+}
+
+.icon_action{
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.details-row {
+  padding: 10px 50px;
+}
+.datatable-icon-right{
+  &::before{
+    content:"\25b6";
+  }
+}
+.datatable-icon-down{
+  &::before{
+    content:"\25bc";
+  }
+}
+.datatable-icon-prev{
+  content:'\21E4';
+}
+.datatable-icon-skip{
+  content: '\21E5';
+}
+
+.datatable-body-cell-label{
+  img{
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+  }
+}
+.pages{
+  a{
+    margin-right:10px ;
+  }
+}
+.edit_contact_block{
+  width:45%;
+  float:left;
+  &:nth-child(2){
+    margin-left:10px;
+    margin-bottom: 20px;
+  }
+}
+.edit_contact_buttons{
+  float: left;
+  text-align:center;
+}
+
+
+
