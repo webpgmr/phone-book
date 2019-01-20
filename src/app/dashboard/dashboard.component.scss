@@ -2,3 +2,19 @@
   width:32px;
   height:32px;
 }
+
+// Mobile view and below
+@media (max-width: 480px) {  
+  .box {
+    width: 300px;
+    margin: 0 10px 10px;
+  }  
+}
+
+// tablet view and below
+@media (min-width: 481px) and (max-width: 768px) {  
+  .box {
+    width: 400px;
+    margin: 0 10px 10px;
+  }  
+}

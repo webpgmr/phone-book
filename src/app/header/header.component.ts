@@ -17,12 +17,14 @@ export class HeaderComponent implements OnInit {
   public user_id: string;
   public userObj: any;
   public headerTitle: string;
+  public mobileMenu: boolean;
 
   constructor(
     public service: AppService,
     public auth: AuthenticationService,
     private router: Router ) {
     this.isUserAvailable = false;
+    this.mobileMenu = false;
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd && ( event.urlAfterRedirects === '/register') ) {
         this.headerTitle = 'Register';
@@ -48,5 +50,15 @@ export class HeaderComponent implements OnInit {
     this.service.changeIsUser(false);
     this.router.navigate(['/login']);
     // location.reload();
+  }
+
+  toggleNavMenu() {
+    this.mobileMenu  = !this.mobileMenu;
+    const element = document.getElementById('collapsibleNavId');
+    if (this.mobileMenu) {
+      element.classList.add("show");
+    }else{
+      element.classList.remove("show");
+    }
   }
 }

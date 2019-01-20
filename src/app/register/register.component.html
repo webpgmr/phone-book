@@ -20,16 +20,36 @@
     </div>
     <div class="row">
       <div class="col">
-        <div *ngIf='email.errors?.required && registerForm.invalid && email.touched'>
+        <div *ngIf='email.errors?.required && registerForm.invalid && email.touched || email.touched && email.errors?.email'>
             <alert type="danger">
-              <strong>!</strong> Valid email address required.
+              <strong>!</strong> Invalid email address.
             </alert>
           </div>
+          <div *ngIf='name.errors?.required && registerForm.invalid && name.touched'>
+              <alert type="danger">
+                <strong>!</strong> Username should not be empty
+              </alert>
+            </div>
           <div *ngIf='password.errors?.required && registerForm.invalid && password.touched'>
               <alert type="danger">
                 <strong>!</strong> Password should not be empty
               </alert>
             </div>
+            <div *ngIf='firstname.errors?.required && registerForm.invalid && firstname.touched'>
+                <alert type="danger">
+                  <strong>!</strong> Firstname should not be empty
+                </alert>
+              </div>
+              <div *ngIf='lastname.errors?.required && registerForm.invalid && lastname.touched'>
+                  <alert type="danger">
+                    <strong>!</strong> Lastname should not be empty
+                  </alert>
+              </div>
+              <div *ngIf='dob.errors?.required && registerForm.invalid && dob.touched'>
+                  <alert type="danger">
+                    <strong>!</strong> DOB should not be empty
+                  </alert>
+              </div>
       </div>
         
     </div>
@@ -49,7 +69,7 @@
               </div>
               <div class="form-group">
                 <label for="password">Password :</label>
-                <input id="password" autocomplete="off" value='' minlength="8"  mxnlength="20" placeholder="Password" type="password" class="form-control" formControlName="password" />
+                <input id="password" autocomplete="off" value='' placeholder="Password" type="password" class="form-control" formControlName="password" />
               </div>
             </fieldset>
         </div>

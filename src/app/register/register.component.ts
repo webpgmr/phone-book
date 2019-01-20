@@ -50,7 +50,7 @@ export class RegisterComponent extends AppConstants implements OnInit {
   createForm() {
     this.email = new FormControl('', [
       Validators.required,
-      Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+      Validators.email
     ]);
     this.name = new FormControl('', Validators.required);
     this.password = new FormControl('', Validators.required);
