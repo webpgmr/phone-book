@@ -39,12 +39,6 @@ export class PhoneBookComponent extends AppConstants implements OnInit {
 
   public displayData: any;
   public tempData: any;
-  public displayColumns = [
-    { prop: 'firstname' },
-    { name: 'lastname' },
-    { name: 'email' },
-    { name: 'mobile' }
-  ];
   public editView: boolean;
   constructor(public service: AppService,
     public datePipe: DatePipe,
@@ -209,12 +203,12 @@ export class PhoneBookComponent extends AppConstants implements OnInit {
     this.contactObj.country = data.country;
     this.contactObj.pincode = data.pincode;
   }
-  
-  toggleCollapse(){
+
+  toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
     this.updatMessage = undefined;
     this.createForm();
-  }  
+  }
 
   toggleExpandRow(row) {
     console.log('Toggled Expand Row!', row);
@@ -247,7 +241,7 @@ export class PhoneBookComponent extends AppConstants implements OnInit {
     this.table.offset = 0;
   }
 
-  deleteConfirm(id){
+  deleteConfirm(id) {
     const conf = confirm('Do you want to Delete!!');
     if (conf) {
       console.log('yes' + id);

@@ -61,5 +61,17 @@
   text-align:center;
 }
 
+// Mobile view and below
+@media (max-width: 991px) {
+  .edit_contact_block{
+    width:80%;
+    float:left;
+    &:nth-child(2){
+      margin-left:0px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
 
 

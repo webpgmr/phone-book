@@ -207,6 +207,12 @@
               </a>
             </ng-template>
           </ngx-datatable-column>
+          <ngx-datatable-column width="100">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+              <img (click)="toggleExpandEditRow(row)" class="icon_action" src="../../assets/icons/edit.png" alt="edit contact">
+              <img (click)="deleteConfirm(row.id)" class="icon_action" src="../../assets/icons/delete.png" alt="delete contact">
+            </ng-template>
+          </ngx-datatable-column>
           <ngx-datatable-column name="Firstname" width="200">
             <ng-template let-value="value" ngx-datatable-cell-template>
               {{value}}
@@ -220,12 +226,6 @@
           <ngx-datatable-column name="Email" width="300">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 {{value}}
-              </ng-template>
-            </ngx-datatable-column>
-          <ngx-datatable-column width="200" name="Action">
-              <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-                <img (click)="toggleExpandEditRow(row)" class="icon_action" src="../../assets/icons/edit.png" alt="edit contact">
-                <img (click)="deleteConfirm(row.id)" class="icon_action" src="../../assets/icons/delete.png" alt="delete contact">
               </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
