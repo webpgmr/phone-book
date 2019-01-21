@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PhoneBookComponent} from './phone-book/phone-book.component';
 import { RegisterComponent } from './register/register.component';
+import { PasswordComponent} from './password/password.component';
 import { AuthGuard } from './guard/auth.guard';
 
 
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'phone-book',
     component: PhoneBookComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'password',
+    component: PasswordComponent,
     canActivate: [AuthGuard]
   }
 ];

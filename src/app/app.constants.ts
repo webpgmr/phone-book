@@ -10,6 +10,7 @@ export class AppConstants {
   apigetContact: string;
   apidelContact: string;
   apieditContact: string;
+  apiPasswordChange: string;
   countryArrList: Array<any>;
 
 
@@ -23,6 +24,7 @@ export class AppConstants {
     this.apigetContact = environment.apiBaseURL + '/pb_be/api/user/get_contact.php';
     this.apidelContact = environment.apiBaseURL + '/pb_be/api/user/delete_contact.php';
     this.apieditContact = environment.apiBaseURL + '/pb_be/api/user/edit_contact.php';
+    this.apiPasswordChange = environment.apiBaseURL + '/pb_be/api/user/change_password.php';
     this.countryArrList = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas"
     ,"Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands"
     ,"Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica"

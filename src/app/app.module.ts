@@ -35,6 +35,7 @@ import {
   } from 'ngx-bootstrap';
 
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { PasswordComponent } from './password/password.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     ProfileComponent,
     LoginComponent,
     PhoneBookComponent,
-    RegisterComponent
+    RegisterComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,

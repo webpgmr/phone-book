@@ -59,7 +59,7 @@ export class LoginComponent extends AppConstants implements OnInit {
           this.apiForm.reset();
           this.spinner.hide();
           this.router.navigate(['/dashboard']);
-        }else{
+        } else {
           this.service.changeIsUser(false);
           this.spinner.hide();
           this.errorType = 'danger';
